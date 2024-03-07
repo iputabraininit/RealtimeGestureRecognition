@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=3 uid="uid://dy66ypyvpbdhy"]
+
+[ext_resource type="Script" path="res://trail_renderer_behaviour.gd" id="1_kbo1v"]
+[ext_resource type="Script" path="res://RealtimeGestureRecognizerBehaviour.gd" id="1_xtdll"]
+[ext_resource type="Script" path="res://TemplateLibraryLoader.gd" id="2_tg0lp"]
+[ext_resource type="Script" path="res://TemplateLibraryBehaviour.gd" id="3_5qlo2"]
+
+[sub_resource type="Gradient" id="Gradient_bt18h"]
+colors = PackedColorArray(0.749881, 0.297854, 0.692728, 1, 1, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_7o3i7"]
+offsets = PackedFloat32Array(0, 0.486111, 1)
+colors = PackedColorArray(1, 0.19, 0.19, 1, 0.91, 0.682348, 0.1911, 1, 0.44, 1, 0.458667, 1)
+
+[node name="root" type="Node2D"]
+
+[node name="RealtimeGestureRecognizer" type="Node2D" parent="." node_paths=PackedStringArray("_templateLibrary")]
+script = ExtResource("1_xtdll")
+_templateLibrary = NodePath("../TemplateLibrary")
+
+[node name="Line2D" type="Line2D" parent="RealtimeGestureRecognizer"]
+width = 5.0
+gradient = SubResource("Gradient_bt18h")
+joint_mode = 2
+
+[node name="TemplateLine" type="Line2D" parent="RealtimeGestureRecognizer"]
+position = Vector2(1000, 500)
+width = 5.0
+gradient = SubResource("Gradient_7o3i7")
+joint_mode = 2
+
+[node name="trail_renderer" type="Node2D" parent="." node_paths=PackedStringArray("_templateLibrary")]
+process_mode = 4
+visible = false
+script = ExtResource("1_kbo1v")
+_templateLibrary = NodePath("../TemplateLibrary")
+
+[node name="Line2D" type="Line2D" parent="trail_renderer"]
+width = 5.0
+gradient = SubResource("Gradient_bt18h")
+joint_mode = 2
+
+[node name="TemplateLine" type="Line2D" parent="trail_renderer"]
+position = Vector2(1000, 500)
+width = 5.0
+gradient = SubResource("Gradient_7o3i7")
+joint_mode = 2
+
+[node name="TemplateLoader" type="Node" parent="." node_paths=PackedStringArray("template_library")]
+script = ExtResource("2_tg0lp")
+template_library = NodePath("../TemplateLibrary")
+file_name = "res://templates/templates.txt"
+
+[node name="TemplateLibrary" type="Node" parent="."]
+script = ExtResource("3_5qlo2")
+
+[connection signal="on_templates_loaded" from="TemplateLoader" to="RealtimeGestureRecognizer" method="_on_template_loader_on_templates_loaded"]
+[connection signal="on_templates_loaded" from="TemplateLoader" to="trail_renderer" method="_on_template_loader_on_templates_loaded"]
