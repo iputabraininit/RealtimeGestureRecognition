@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsblghjqwygdf"]
+
+[ext_resource type="Texture2D" uid="uid://bav703vydo8yn" path="res://mandala/heart_shape.png" id="1_03707"]
+[ext_resource type="Material" uid="uid://db5qfgm5qo16d" path="res://shaders/fire_material.tres" id="1_wxvll"]
+
+[node name="GlyphDisplay" type="Node2D"]
+
+[node name="CoreSprite" type="Sprite2D" parent="."]
+texture_filter = 6
+material = ExtResource("1_wxvll")
+position = Vector2(0, -60.925)
+scale = Vector2(0.85, 1)
+texture = ExtResource("1_03707")

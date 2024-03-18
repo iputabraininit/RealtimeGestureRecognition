@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://bdyy11ixmwhyk"]
+
+[ext_resource type="Script" path="res://MandalaCore.gd" id="1_02xs5"]
+[ext_resource type="PackedScene" uid="uid://dk23lysx1h0d5" path="res://mandala/components/glyph.tscn" id="2_qbtd5"]
+[ext_resource type="Texture2D" uid="uid://d25gftqb7i4qg" path="res://mandala/circle.png" id="3_enigc"]
+[ext_resource type="Material" uid="uid://db5qfgm5qo16d" path="res://shaders/fire_material.tres" id="3_xtr62"]
+
+[node name="Core" type="Node2D"]
+script = ExtResource("1_02xs5")
+glyph_packed_scene = ExtResource("2_qbtd5")
+
+[node name="CircularFrame" type="Sprite2D" parent="."]
+texture_filter = 5
+material = ExtResource("3_xtr62")
+scale = Vector2(2, 2)
+texture = ExtResource("3_enigc")
+
+[node name="Glyph" parent="." instance=ExtResource("2_qbtd5")]

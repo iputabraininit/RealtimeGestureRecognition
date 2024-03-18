@@ -20,7 +20,12 @@ config/icon="res://icon.svg"
 window/size/viewport_width=1980
 window/size/viewport_height=1024
 
+[internationalization]
+
+locale/fallback="color"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.180392, 0.180392, 0.180392, 1)

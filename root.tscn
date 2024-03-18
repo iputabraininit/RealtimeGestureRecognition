@@ -1,33 +1,71 @@
-[gd_scene load_steps=7 format=3 uid="uid://dy66ypyvpbdhy"]
+[gd_scene load_steps=13 format=3 uid="uid://dy66ypyvpbdhy"]
 
 [ext_resource type="Script" path="res://trail_renderer_behaviour.gd" id="1_kbo1v"]
 [ext_resource type="Script" path="res://RealtimeGestureRecognizerBehaviour.gd" id="1_xtdll"]
 [ext_resource type="Script" path="res://TemplateLibraryLoader.gd" id="2_tg0lp"]
+[ext_resource type="Texture2D" uid="uid://dn6403r82868h" path="res://particle_sprites/flare_01.png" id="2_xq5hd"]
 [ext_resource type="Script" path="res://TemplateLibraryBehaviour.gd" id="3_5qlo2"]
+[ext_resource type="PackedScene" uid="uid://dx366k13jsjyt" path="res://mandala/components/mandala.tscn" id="6_va0dn"]
 
 [sub_resource type="Gradient" id="Gradient_bt18h"]
 colors = PackedColorArray(0.749881, 0.297854, 0.692728, 1, 1, 1, 1, 1)
 
 [sub_resource type="Gradient" id="Gradient_7o3i7"]
 offsets = PackedFloat32Array(0, 0.486111, 1)
-colors = PackedColorArray(1, 0.19, 0.19, 1, 0.91, 0.682348, 0.1911, 1, 0.44, 1, 0.458667, 1)
+colors = PackedColorArray(1, 0.188235, 0.188235, 0.392157, 0.909804, 0.682353, 0.192157, 0.4, 0.439216, 1, 0.458824, 0.4)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_73rpa"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_r55bu"]
+_data = [Vector2(0.0112613, 0.0452118), 0.0, 0.0, 0, 0, Vector2(0.171171, 0.99752), 0.0, 0.0, 0, 0, Vector2(0.452703, 1), 0.0, 0.0, 0, 0, Vector2(0.997748, 0.0179322), -3.22115, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_kei1g"]
+curve = SubResource("Curve_r55bu")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a5k0u"]
+particle_flag_disable_z = true
+angle_min = -121.4
+angle_max = 218.2
+spread = 124.518
+initial_velocity_max = 20.08
+gravity = Vector3(0, 10, 0)
+linear_accel_min = -8.84
+linear_accel_max = 11.24
+scale_min = 0.05
+scale_max = 0.2
+color = Color(1, 0.619608, 0.211765, 1)
+alpha_curve = SubResource("CurveTexture_kei1g")
+hue_variation_min = -0.13
+hue_variation_max = 0.14
 
 [node name="root" type="Node2D"]
 
-[node name="RealtimeGestureRecognizer" type="Node2D" parent="." node_paths=PackedStringArray("_templateLibrary")]
+[node name="RealtimeGestureRecognizer" type="Node2D" parent="." node_paths=PackedStringArray("_templateLibrary", "mandala")]
 script = ExtResource("1_xtdll")
 _templateLibrary = NodePath("../TemplateLibrary")
+mandala = NodePath("../Mandala")
 
-[node name="Line2D" type="Line2D" parent="RealtimeGestureRecognizer"]
+[node name="DrawingLine" type="Line2D" parent="RealtimeGestureRecognizer"]
 width = 5.0
 gradient = SubResource("Gradient_bt18h")
 joint_mode = 2
 
-[node name="TemplateLine" type="Line2D" parent="RealtimeGestureRecognizer"]
-position = Vector2(1000, 500)
+[node name="ShapeLine" type="Line2D" parent="RealtimeGestureRecognizer"]
 width = 5.0
 gradient = SubResource("Gradient_7o3i7")
 joint_mode = 2
+
+[node name="ShapeParticles" type="GPUParticles2D" parent="RealtimeGestureRecognizer"]
+material = SubResource("CanvasItemMaterial_73rpa")
+position = Vector2(977, 299)
+emitting = false
+amount = 1000
+process_material = SubResource("ParticleProcessMaterial_a5k0u")
+texture = ExtResource("2_xq5hd")
+lifetime = 1.5
+randomness = 1.0
 
 [node name="trail_renderer" type="Node2D" parent="." node_paths=PackedStringArray("_templateLibrary")]
 process_mode = 4
@@ -53,6 +91,8 @@ file_name = "res://templates/templates.txt"
 
 [node name="TemplateLibrary" type="Node" parent="."]
 script = ExtResource("3_5qlo2")
+
+[node name="Mandala" parent="." instance=ExtResource("6_va0dn")]
 
 [connection signal="on_templates_loaded" from="TemplateLoader" to="RealtimeGestureRecognizer" method="_on_template_loader_on_templates_loaded"]
 [connection signal="on_templates_loaded" from="TemplateLoader" to="trail_renderer" method="_on_template_loader_on_templates_loaded"]

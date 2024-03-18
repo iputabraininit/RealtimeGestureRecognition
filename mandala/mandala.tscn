@@ -1,0 +1,447 @@
+[gd_scene load_steps=24 format=3 uid="uid://dchu2i8qmvpcl"]
+
+[ext_resource type="PackedScene" uid="uid://b0thvl5bv8002" path="res://mandala/roundel.tscn" id="1_7wen3"]
+[ext_resource type="Shader" path="res://shaders/flicker_fire.gdshader" id="2_vrhdj"]
+[ext_resource type="Texture2D" uid="uid://cxhj06vl5e1rs" path="res://shaders/WispyNoise.png" id="3_5lwq5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vqrb5"]
+resource_local_to_scene = true
+shader = ExtResource("2_vrhdj")
+shader_parameter/low_frequency_scroll = Vector2(0, 0.01)
+shader_parameter/high_frequency_scroll = Vector2(0.1, 0.5)
+shader_parameter/low_frequency_noise_scale = Vector2(1, 1)
+shader_parameter/high_frequency_noise_scale = Vector2(1, 1)
+shader_parameter/color = null
+shader_parameter/distortion = 0.05
+shader_parameter/base_intensity = 0.1
+shader_parameter/intensity_factor = 1.5
+shader_parameter/alpha = null
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN = ExtResource("3_5lwq5")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ya585"]
+noise_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_q472c"]
+seamless = true
+noise = SubResource("FastNoiseLite_ya585")
+
+[sub_resource type="Gradient" id="Gradient_vrgpx"]
+offsets = PackedFloat32Array(0.0103627, 0.264249, 0.663212, 0.976684)
+colors = PackedColorArray(0.87451, 0.529412, 0.101961, 0, 0.875659, 0.53095, 0.101743, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_l5j8a"]
+gradient = SubResource("Gradient_vrgpx")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2dntl"]
+resource_local_to_scene = true
+shader = ExtResource("2_vrhdj")
+shader_parameter/low_frequency_scroll = Vector2(0, 0.05)
+shader_parameter/high_frequency_scroll = Vector2(0.035, 0.035)
+shader_parameter/low_frequency_noise_scale = Vector2(0.655, 0.565)
+shader_parameter/high_frequency_noise_scale = Vector2(2.205, 2.2)
+shader_parameter/color = null
+shader_parameter/distortion = 0.11
+shader_parameter/base_intensity = 0.127
+shader_parameter/intensity_factor = 1.217
+shader_parameter/alpha = 1.0
+shader_parameter/blur = 0.0
+shader_parameter/NOISE_PATTERN = SubResource("NoiseTexture2D_q472c")
+shader_parameter/TONE_MAPPING = SubResource("GradientTexture1D_l5j8a")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w6qt5"]
+resource_local_to_scene = true
+shader = ExtResource("2_vrhdj")
+shader_parameter/low_frequency_scroll = Vector2(0, 0.01)
+shader_parameter/high_frequency_scroll = Vector2(0.1, 0.5)
+shader_parameter/low_frequency_noise_scale = Vector2(1, 1)
+shader_parameter/high_frequency_noise_scale = Vector2(1, 1)
+shader_parameter/color = null
+shader_parameter/distortion = 0.05
+shader_parameter/base_intensity = 0.1
+shader_parameter/intensity_factor = 1.5
+shader_parameter/alpha = null
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN = ExtResource("3_5lwq5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2kmps"]
+resource_local_to_scene = true
+shader = ExtResource("2_vrhdj")
+shader_parameter/low_frequency_scroll = Vector2(0, 0.05)
+shader_parameter/high_frequency_scroll = Vector2(0.035, 0.035)
+shader_parameter/low_frequency_noise_scale = Vector2(0.655, 0.565)
+shader_parameter/high_frequency_noise_scale = Vector2(2.205, 2.2)
+shader_parameter/color = null
+shader_parameter/distortion = 0.11
+shader_parameter/base_intensity = 0.127
+shader_parameter/intensity_factor = 1.217
+shader_parameter/alpha = 1.0
+shader_parameter/blur = 0.0
+shader_parameter/NOISE_PATTERN = SubResource("NoiseTexture2D_q472c")
+shader_parameter/TONE_MAPPING = SubResource("GradientTexture1D_l5j8a")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_anesu"]
+resource_local_to_scene = true
+shader = ExtResource("2_vrhdj")
+shader_parameter/low_frequency_scroll = Vector2(0, 0.01)
+shader_parameter/high_frequency_scroll = Vector2(0.1, 0.5)
+shader_parameter/low_frequency_noise_scale = Vector2(1, 1)
+shader_parameter/high_frequency_noise_scale = Vector2(1, 1)
+shader_parameter/color = null
+shader_parameter/distortion = 0.05
+shader_parameter/base_intensity = 0.1
+shader_parameter/intensity_factor = 1.5
+shader_parameter/alpha = null
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN = ExtResource("3_5lwq5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nujeo"]
+resource_local_to_scene = true
+shader = ExtResource("2_vrhdj")
+shader_parameter/low_frequency_scroll = Vector2(0, 0.05)
+shader_parameter/high_frequency_scroll = Vector2(0.035, 0.035)
+shader_parameter/low_frequency_noise_scale = Vector2(0.655, 0.565)
+shader_parameter/high_frequency_noise_scale = Vector2(2.205, 2.2)
+shader_parameter/color = null
+shader_parameter/distortion = 0.11
+shader_parameter/base_intensity = 0.127
+shader_parameter/intensity_factor = 1.217
+shader_parameter/alpha = 1.0
+shader_parameter/blur = 0.0
+shader_parameter/NOISE_PATTERN = SubResource("NoiseTexture2D_q472c")
+shader_parameter/TONE_MAPPING = SubResource("GradientTexture1D_l5j8a")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_umrlt"]
+resource_local_to_scene = true
+shader = ExtResource("2_vrhdj")
+shader_parameter/low_frequency_scroll = Vector2(0, 0.01)
+shader_parameter/high_frequency_scroll = Vector2(0.1, 0.5)
+shader_parameter/low_frequency_noise_scale = Vector2(1, 1)
+shader_parameter/high_frequency_noise_scale = Vector2(1, 1)
+shader_parameter/color = null
+shader_parameter/distortion = 0.05
+shader_parameter/base_intensity = 0.1
+shader_parameter/intensity_factor = 1.5
+shader_parameter/alpha = null
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN = ExtResource("3_5lwq5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_68oee"]
+resource_local_to_scene = true
+shader = ExtResource("2_vrhdj")
+shader_parameter/low_frequency_scroll = Vector2(0, 0.05)
+shader_parameter/high_frequency_scroll = Vector2(0.035, 0.035)
+shader_parameter/low_frequency_noise_scale = Vector2(0.655, 0.565)
+shader_parameter/high_frequency_noise_scale = Vector2(2.205, 2.2)
+shader_parameter/color = null
+shader_parameter/distortion = 0.11
+shader_parameter/base_intensity = 0.127
+shader_parameter/intensity_factor = 1.217
+shader_parameter/alpha = 1.0
+shader_parameter/blur = 0.0
+shader_parameter/NOISE_PATTERN = SubResource("NoiseTexture2D_q472c")
+shader_parameter/TONE_MAPPING = SubResource("GradientTexture1D_l5j8a")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_56j1v"]
+resource_local_to_scene = true
+shader = ExtResource("2_vrhdj")
+shader_parameter/low_frequency_scroll = Vector2(0, 0.01)
+shader_parameter/high_frequency_scroll = Vector2(0.1, 0.5)
+shader_parameter/low_frequency_noise_scale = Vector2(1, 1)
+shader_parameter/high_frequency_noise_scale = Vector2(1, 1)
+shader_parameter/color = null
+shader_parameter/distortion = 0.05
+shader_parameter/base_intensity = 0.1
+shader_parameter/intensity_factor = 1.5
+shader_parameter/alpha = null
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN = ExtResource("3_5lwq5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wi23r"]
+resource_local_to_scene = true
+shader = ExtResource("2_vrhdj")
+shader_parameter/low_frequency_scroll = Vector2(0, 0.05)
+shader_parameter/high_frequency_scroll = Vector2(0.035, 0.035)
+shader_parameter/low_frequency_noise_scale = Vector2(0.655, 0.565)
+shader_parameter/high_frequency_noise_scale = Vector2(2.205, 2.2)
+shader_parameter/color = null
+shader_parameter/distortion = 0.11
+shader_parameter/base_intensity = 0.127
+shader_parameter/intensity_factor = 1.217
+shader_parameter/alpha = 1.0
+shader_parameter/blur = 0.0
+shader_parameter/NOISE_PATTERN = SubResource("NoiseTexture2D_q472c")
+shader_parameter/TONE_MAPPING = SubResource("GradientTexture1D_l5j8a")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ua0tv"]
+resource_local_to_scene = true
+shader = ExtResource("2_vrhdj")
+shader_parameter/low_frequency_scroll = Vector2(0, 0.01)
+shader_parameter/high_frequency_scroll = Vector2(0.1, 0.5)
+shader_parameter/low_frequency_noise_scale = Vector2(1, 1)
+shader_parameter/high_frequency_noise_scale = Vector2(1, 1)
+shader_parameter/color = null
+shader_parameter/distortion = 0.05
+shader_parameter/base_intensity = 0.1
+shader_parameter/intensity_factor = 1.5
+shader_parameter/alpha = null
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN = ExtResource("3_5lwq5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_drwec"]
+resource_local_to_scene = true
+shader = ExtResource("2_vrhdj")
+shader_parameter/low_frequency_scroll = Vector2(0, 0.05)
+shader_parameter/high_frequency_scroll = Vector2(0.035, 0.035)
+shader_parameter/low_frequency_noise_scale = Vector2(0.655, 0.565)
+shader_parameter/high_frequency_noise_scale = Vector2(2.205, 2.2)
+shader_parameter/color = null
+shader_parameter/distortion = 0.11
+shader_parameter/base_intensity = 0.127
+shader_parameter/intensity_factor = 1.217
+shader_parameter/alpha = 1.0
+shader_parameter/blur = 0.0
+shader_parameter/NOISE_PATTERN = SubResource("NoiseTexture2D_q472c")
+shader_parameter/TONE_MAPPING = SubResource("GradientTexture1D_l5j8a")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_spuki"]
+resource_local_to_scene = true
+shader = ExtResource("2_vrhdj")
+shader_parameter/low_frequency_scroll = Vector2(0, 0.01)
+shader_parameter/high_frequency_scroll = Vector2(0.1, 0.5)
+shader_parameter/low_frequency_noise_scale = Vector2(1, 1)
+shader_parameter/high_frequency_noise_scale = Vector2(1, 1)
+shader_parameter/color = null
+shader_parameter/distortion = 0.05
+shader_parameter/base_intensity = 0.1
+shader_parameter/intensity_factor = 1.5
+shader_parameter/alpha = null
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN = ExtResource("3_5lwq5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qbr8w"]
+resource_local_to_scene = true
+shader = ExtResource("2_vrhdj")
+shader_parameter/low_frequency_scroll = Vector2(0, 0.05)
+shader_parameter/high_frequency_scroll = Vector2(0.035, 0.035)
+shader_parameter/low_frequency_noise_scale = Vector2(0.655, 0.565)
+shader_parameter/high_frequency_noise_scale = Vector2(2.205, 2.2)
+shader_parameter/color = null
+shader_parameter/distortion = 0.11
+shader_parameter/base_intensity = 0.127
+shader_parameter/intensity_factor = 1.217
+shader_parameter/alpha = 1.0
+shader_parameter/blur = 0.0
+shader_parameter/NOISE_PATTERN = SubResource("NoiseTexture2D_q472c")
+shader_parameter/TONE_MAPPING = SubResource("GradientTexture1D_l5j8a")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7gj4v"]
+resource_local_to_scene = true
+shader = ExtResource("2_vrhdj")
+shader_parameter/low_frequency_scroll = Vector2(0, 0.01)
+shader_parameter/high_frequency_scroll = Vector2(0.1, 0.5)
+shader_parameter/low_frequency_noise_scale = Vector2(1, 1)
+shader_parameter/high_frequency_noise_scale = Vector2(1, 1)
+shader_parameter/color = null
+shader_parameter/distortion = 0.05
+shader_parameter/base_intensity = 0.1
+shader_parameter/intensity_factor = 1.5
+shader_parameter/alpha = null
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN = ExtResource("3_5lwq5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2iwxi"]
+resource_local_to_scene = true
+shader = ExtResource("2_vrhdj")
+shader_parameter/low_frequency_scroll = Vector2(0, 0.05)
+shader_parameter/high_frequency_scroll = Vector2(0.035, 0.035)
+shader_parameter/low_frequency_noise_scale = Vector2(0.655, 0.565)
+shader_parameter/high_frequency_noise_scale = Vector2(2.205, 2.2)
+shader_parameter/color = null
+shader_parameter/distortion = 0.11
+shader_parameter/base_intensity = 0.127
+shader_parameter/intensity_factor = 1.217
+shader_parameter/alpha = 1.0
+shader_parameter/blur = 0.0
+shader_parameter/NOISE_PATTERN = SubResource("NoiseTexture2D_q472c")
+shader_parameter/TONE_MAPPING = SubResource("GradientTexture1D_l5j8a")
+
+[node name="Mandala" type="Node2D"]
+
+[node name="Roundel" parent="." instance=ExtResource("1_7wen3")]
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Roundel2" parent="Node2D" instance=ExtResource("1_7wen3")]
+position = Vector2(0, -337.17)
+scale = Vector2(0.5, 0.5)
+
+[node name="GlyphDisplay" parent="Node2D/Roundel2" index="0"]
+material = SubResource("ShaderMaterial_vqrb5")
+
+[node name="CircleFrame" parent="Node2D/Roundel2" index="4"]
+material = SubResource("ShaderMaterial_2dntl")
+
+[node name="SquareFrame2" parent="Node2D/Roundel2" index="5"]
+visible = false
+material = SubResource("ShaderMaterial_2dntl")
+
+[node name="SquareFrame" parent="Node2D/Roundel2" index="6"]
+visible = false
+material = SubResource("ShaderMaterial_2dntl")
+
+[node name="Node2D2" type="Node2D" parent="."]
+rotation = 0.785398
+
+[node name="Roundel2" parent="Node2D2" instance=ExtResource("1_7wen3")]
+position = Vector2(0, -337.17)
+scale = Vector2(0.5, 0.5)
+
+[node name="GlyphDisplay" parent="Node2D2/Roundel2" index="0"]
+material = SubResource("ShaderMaterial_w6qt5")
+
+[node name="CircleFrame" parent="Node2D2/Roundel2" index="4"]
+material = SubResource("ShaderMaterial_2kmps")
+
+[node name="SquareFrame2" parent="Node2D2/Roundel2" index="5"]
+visible = false
+material = SubResource("ShaderMaterial_2kmps")
+
+[node name="SquareFrame" parent="Node2D2/Roundel2" index="6"]
+visible = false
+material = SubResource("ShaderMaterial_2kmps")
+
+[node name="Node2D3" type="Node2D" parent="."]
+rotation = 1.5708
+
+[node name="Roundel2" parent="Node2D3" instance=ExtResource("1_7wen3")]
+position = Vector2(0, -337.17)
+scale = Vector2(0.5, 0.5)
+
+[node name="GlyphDisplay" parent="Node2D3/Roundel2" index="0"]
+material = SubResource("ShaderMaterial_anesu")
+
+[node name="CircleFrame" parent="Node2D3/Roundel2" index="4"]
+material = SubResource("ShaderMaterial_nujeo")
+
+[node name="SquareFrame2" parent="Node2D3/Roundel2" index="5"]
+visible = false
+material = SubResource("ShaderMaterial_nujeo")
+
+[node name="SquareFrame" parent="Node2D3/Roundel2" index="6"]
+visible = false
+material = SubResource("ShaderMaterial_nujeo")
+
+[node name="Node2D4" type="Node2D" parent="."]
+rotation = 2.35619
+
+[node name="Roundel2" parent="Node2D4" instance=ExtResource("1_7wen3")]
+position = Vector2(0, -337.17)
+scale = Vector2(0.5, 0.5)
+
+[node name="GlyphDisplay" parent="Node2D4/Roundel2" index="0"]
+material = SubResource("ShaderMaterial_umrlt")
+
+[node name="CircleFrame" parent="Node2D4/Roundel2" index="4"]
+material = SubResource("ShaderMaterial_68oee")
+
+[node name="SquareFrame2" parent="Node2D4/Roundel2" index="5"]
+visible = false
+material = SubResource("ShaderMaterial_68oee")
+
+[node name="SquareFrame" parent="Node2D4/Roundel2" index="6"]
+visible = false
+material = SubResource("ShaderMaterial_68oee")
+
+[node name="Node2D5" type="Node2D" parent="."]
+rotation = 3.14159
+
+[node name="Roundel2" parent="Node2D5" instance=ExtResource("1_7wen3")]
+position = Vector2(0, -337.17)
+scale = Vector2(0.5, 0.5)
+
+[node name="GlyphDisplay" parent="Node2D5/Roundel2" index="0"]
+material = SubResource("ShaderMaterial_56j1v")
+
+[node name="CircleFrame" parent="Node2D5/Roundel2" index="4"]
+material = SubResource("ShaderMaterial_wi23r")
+
+[node name="SquareFrame2" parent="Node2D5/Roundel2" index="5"]
+visible = false
+material = SubResource("ShaderMaterial_wi23r")
+
+[node name="SquareFrame" parent="Node2D5/Roundel2" index="6"]
+visible = false
+material = SubResource("ShaderMaterial_wi23r")
+
+[node name="Node2D6" type="Node2D" parent="."]
+rotation = 3.92699
+
+[node name="Roundel2" parent="Node2D6" instance=ExtResource("1_7wen3")]
+position = Vector2(0, -337.135)
+scale = Vector2(0.5, 0.5)
+
+[node name="GlyphDisplay" parent="Node2D6/Roundel2" index="0"]
+material = SubResource("ShaderMaterial_ua0tv")
+
+[node name="CircleFrame" parent="Node2D6/Roundel2" index="4"]
+material = SubResource("ShaderMaterial_drwec")
+
+[node name="SquareFrame2" parent="Node2D6/Roundel2" index="5"]
+visible = false
+material = SubResource("ShaderMaterial_drwec")
+
+[node name="SquareFrame" parent="Node2D6/Roundel2" index="6"]
+visible = false
+material = SubResource("ShaderMaterial_drwec")
+
+[node name="Node2D7" type="Node2D" parent="."]
+rotation = 4.71239
+
+[node name="Roundel2" parent="Node2D7" instance=ExtResource("1_7wen3")]
+position = Vector2(0, -337.135)
+scale = Vector2(0.5, 0.5)
+
+[node name="GlyphDisplay" parent="Node2D7/Roundel2" index="0"]
+material = SubResource("ShaderMaterial_spuki")
+
+[node name="CircleFrame" parent="Node2D7/Roundel2" index="4"]
+material = SubResource("ShaderMaterial_qbr8w")
+
+[node name="SquareFrame2" parent="Node2D7/Roundel2" index="5"]
+visible = false
+material = SubResource("ShaderMaterial_qbr8w")
+
+[node name="SquareFrame" parent="Node2D7/Roundel2" index="6"]
+visible = false
+material = SubResource("ShaderMaterial_qbr8w")
+
+[node name="Node2D8" type="Node2D" parent="."]
+rotation = 5.49779
+
+[node name="Roundel2" parent="Node2D8" instance=ExtResource("1_7wen3")]
+position = Vector2(0, -337.135)
+scale = Vector2(0.5, 0.5)
+
+[node name="GlyphDisplay" parent="Node2D8/Roundel2" index="0"]
+material = SubResource("ShaderMaterial_7gj4v")
+
+[node name="CircleFrame" parent="Node2D8/Roundel2" index="4"]
+material = SubResource("ShaderMaterial_2iwxi")
+
+[node name="SquareFrame2" parent="Node2D8/Roundel2" index="5"]
+visible = false
+material = SubResource("ShaderMaterial_2iwxi")
+
+[node name="SquareFrame" parent="Node2D8/Roundel2" index="6"]
+visible = false
+material = SubResource("ShaderMaterial_2iwxi")
+
+[editable path="Node2D/Roundel2"]
+[editable path="Node2D2/Roundel2"]
+[editable path="Node2D3/Roundel2"]
+[editable path="Node2D4/Roundel2"]
+[editable path="Node2D5/Roundel2"]
+[editable path="Node2D6/Roundel2"]
+[editable path="Node2D7/Roundel2"]
+[editable path="Node2D8/Roundel2"]

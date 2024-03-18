@@ -1,0 +1,159 @@
+[gd_scene load_steps=14 format=3 uid="uid://dx366k13jsjyt"]
+
+[ext_resource type="Script" path="res://MandalaBehaviour.gd" id="1_qg6gc"]
+[ext_resource type="PackedScene" uid="uid://bdyy11ixmwhyk" path="res://mandala/components/core.tscn" id="2_s61k3"]
+[ext_resource type="Script" path="res://InnerRimBehaviour.gd" id="3_ut4ke"]
+[ext_resource type="Script" path="res://mandala/components/OuterRimBehaviour.gd" id="4_bnxjw"]
+[ext_resource type="Material" uid="uid://db5qfgm5qo16d" path="res://shaders/fire_material.tres" id="4_f128k"]
+[ext_resource type="Shader" path="res://shaders/flicker_fire.gdshader" id="6_oo3rf"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hs4fa"]
+load_path = "res://.godot/imported/square.png-afa6dbabb36635292363b1d0f57da2c6.ctex"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_n7vqe"]
+noise_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bolyf"]
+seamless = true
+noise = SubResource("FastNoiseLite_n7vqe")
+
+[sub_resource type="Gradient" id="Gradient_myiyy"]
+offsets = PackedFloat32Array(0.0103627, 0.264249, 0.663212, 0.976684)
+colors = PackedColorArray(0.87451, 0.529412, 0.101961, 0, 0.875659, 0.53095, 0.101743, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_a2ocs"]
+gradient = SubResource("Gradient_myiyy")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u8xce"]
+resource_local_to_scene = true
+shader = ExtResource("6_oo3rf")
+shader_parameter/low_frequency_scroll = Vector2(0, 0.05)
+shader_parameter/high_frequency_scroll = Vector2(0.035, 0.035)
+shader_parameter/low_frequency_noise_scale = Vector2(0.655, 0.565)
+shader_parameter/high_frequency_noise_scale = Vector2(1, 1)
+shader_parameter/color = Color(1, 0.705882, 0.0901961, 1)
+shader_parameter/distortion = 0.11
+shader_parameter/base_intensity = 0.127
+shader_parameter/intensity_factor = 1.217
+shader_parameter/alpha = 1.0
+shader_parameter/blur = 0.0
+shader_parameter/NOISE_PATTERN = SubResource("NoiseTexture2D_bolyf")
+shader_parameter/TONE_MAPPING = SubResource("GradientTexture1D_a2ocs")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6sfha"]
+load_path = "res://.godot/imported/square.png-afa6dbabb36635292363b1d0f57da2c6.ctex"
+
+[node name="Mandala" type="Node2D"]
+position = Vector2(1000, 500)
+script = ExtResource("1_qg6gc")
+glpyhs = {
+"heart": "res://mandala/heart_shape.png",
+"star": "res://mandala/star_shape.png"
+}
+glyph_colors = {
+"heart": Color(0.694118, 0.345098, 0.466667, 1),
+"star": Color(0.92, 0.730633, 0.046, 1)
+}
+packed_core = ExtResource("2_s61k3")
+
+[node name="Core" parent="." instance=ExtResource("2_s61k3")]
+
+[node name="InnerRim" type="Node2D" parent="."]
+script = ExtResource("3_ut4ke")
+metadata/_edit_group_ = true
+
+[node name="Frame" type="Sprite2D" parent="InnerRim"]
+material = ExtResource("4_f128k")
+scale = Vector2(2.1, 2.1)
+texture = SubResource("CompressedTexture2D_hs4fa")
+
+[node name="Holders" type="Node2D" parent="InnerRim"]
+
+[node name="Holder_0" type="Node2D" parent="InnerRim/Holders"]
+position = Vector2(0, -400)
+scale = Vector2(0.5, 0.5)
+
+[node name="Holder_1" type="Node2D" parent="InnerRim/Holders"]
+position = Vector2(282, -282)
+rotation = 0.785398
+scale = Vector2(0.5, 0.5)
+
+[node name="Holder_2" type="Node2D" parent="InnerRim/Holders"]
+position = Vector2(400, 0)
+rotation = 1.5708
+scale = Vector2(0.5, 0.5)
+
+[node name="Holder_3" type="Node2D" parent="InnerRim/Holders"]
+position = Vector2(282, 282)
+rotation = 2.35619
+scale = Vector2(0.5, 0.5)
+
+[node name="Holder_4" type="Node2D" parent="InnerRim/Holders"]
+position = Vector2(0, 400)
+rotation = -3.14159
+scale = Vector2(0.5, 0.5)
+
+[node name="Holder_5" type="Node2D" parent="InnerRim/Holders"]
+position = Vector2(-282, 282)
+rotation = -2.35619
+scale = Vector2(0.5, 0.5)
+
+[node name="Holder_6" type="Node2D" parent="InnerRim/Holders"]
+position = Vector2(-400, 0)
+rotation = -1.5708
+scale = Vector2(0.5, 0.5)
+
+[node name="Holder_7" type="Node2D" parent="InnerRim/Holders"]
+position = Vector2(-282, -282)
+rotation = -0.785398
+scale = Vector2(0.5, 0.5)
+
+[node name="OuterRim" type="Node2D" parent="."]
+script = ExtResource("4_bnxjw")
+
+[node name="Frame" type="Sprite2D" parent="OuterRim"]
+material = SubResource("ShaderMaterial_u8xce")
+rotation = 0.785398
+scale = Vector2(2.5, 2.5)
+texture = SubResource("CompressedTexture2D_6sfha")
+
+[node name="Holders" type="Node2D" parent="OuterRim"]
+
+[node name="Holder_0" type="Node2D" parent="OuterRim/Holders"]
+position = Vector2(0, -500)
+scale = Vector2(0.25, 0.25)
+
+[node name="Holder_1" type="Node2D" parent="OuterRim/Holders"]
+position = Vector2(353, -353)
+rotation = 0.785398
+scale = Vector2(0.25, 0.25)
+
+[node name="Holder_2" type="Node2D" parent="OuterRim/Holders"]
+position = Vector2(500, 0)
+rotation = 1.5708
+scale = Vector2(0.25, 0.25)
+
+[node name="Holder_3" type="Node2D" parent="OuterRim/Holders"]
+position = Vector2(353, 353)
+rotation = 2.35619
+scale = Vector2(0.25, 0.25)
+
+[node name="Holder_4" type="Node2D" parent="OuterRim/Holders"]
+position = Vector2(0, 500)
+rotation = -3.14159
+scale = Vector2(0.25, 0.25)
+
+[node name="Holder_5" type="Node2D" parent="OuterRim/Holders"]
+position = Vector2(-353, 353)
+rotation = -2.35619
+scale = Vector2(0.25, 0.25)
+
+[node name="Holder_6" type="Node2D" parent="OuterRim/Holders"]
+position = Vector2(-500, 0)
+rotation = -1.5708
+scale = Vector2(0.25, 0.25)
+
+[node name="Holder_7" type="Node2D" parent="OuterRim/Holders"]
+position = Vector2(-353, -353)
+rotation = -0.785398
+scale = Vector2(0.25, 0.25)

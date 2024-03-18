@@ -1,0 +1,33 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://db5qfgm5qo16d"]
+
+[ext_resource type="Shader" path="res://shaders/flicker_fire.gdshader" id="1_ijsh0"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ya585"]
+noise_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_q472c"]
+seamless = true
+noise = SubResource("FastNoiseLite_ya585")
+
+[sub_resource type="Gradient" id="Gradient_vrgpx"]
+offsets = PackedFloat32Array(0.0103627, 0.264249, 0.663212, 0.976684)
+colors = PackedColorArray(0.87451, 0.529412, 0.101961, 0, 0.875659, 0.53095, 0.101743, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_l5j8a"]
+gradient = SubResource("Gradient_vrgpx")
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_ijsh0")
+shader_parameter/low_frequency_scroll = Vector2(0, 0.05)
+shader_parameter/high_frequency_scroll = Vector2(0.035, 0.035)
+shader_parameter/low_frequency_noise_scale = Vector2(0.655, 0.565)
+shader_parameter/high_frequency_noise_scale = Vector2(1, 1)
+shader_parameter/color = Color(1, 0.705882, 0.0901961, 1)
+shader_parameter/distortion = 0.11
+shader_parameter/base_intensity = 0.127
+shader_parameter/intensity_factor = 1.217
+shader_parameter/alpha = 1.0
+shader_parameter/blur = 0.0
+shader_parameter/NOISE_PATTERN = SubResource("NoiseTexture2D_q472c")
+shader_parameter/TONE_MAPPING = SubResource("GradientTexture1D_l5j8a")

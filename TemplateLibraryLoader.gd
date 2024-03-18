@@ -15,24 +15,48 @@ func _ready():
 		var template_line:PackedStringArray =  template_file.get_csv_line(",")
 		
 		var template_name = template_line[0]
-		if template_name == null || template_name.is_empty():
+		if template_name == null || template_name.is_empty() || template_name.begins_with("#"):
 			continue
 			
-		#prints(template_name, "points", (template_line.size() - 1) / 2)
+		prints(template_name, "points", (template_line.size() - 1) / 2)
 		
 		var template_points:Array[Vector2] =  []
 		for i in range(1, template_line.size(), 2):
 			var x = float(template_line[i])
 			var y = float(template_line[i + 1])
 			template_points.append(Vector2(x, y))
-		
-		template_library.add_template(template_line[0], template_points)
-	#print("Triangle before:")
-	#prints(_templates["triangle"])
-	#var resampled_points = template_library._resample_between_points_penny_pincher_style("triangle", _templates["triangle"])
-	#
-	#_resampled_templates["triangle"] = resampled_points
-	#prints("Resampled points", resampled_points, "size", resampled_points.size())
+			
+		_move_to_origin_and_normalize(template_points)
+		template_library.add_template(template_name, template_points)
+	
 	emit_signal("on_templates_loaded")
 	
  
+func _move_to_origin_and_normalize(points:Array[Vector2]):
+	var min_x = INF
+	var max_x = -INF
+	var min_y = INF
+	var max_y = -INF
+	
+	var origin = points[0]
+	prints("Origin", origin)
+	for i in points.size():
+		var point = points[i] 
+		points[i] = point - origin
+		min_x = min(point.x, min_x)
+		max_x = max(point.x, max_x)
+		min_y = min(point.y, min_y)
+		max_y = max(point.y, max_y)
+		
+	var x_span = max_x - min_x
+	var y_span = max_y - min_y
+	
+	var max_span:float = max(x_span, y_span)
+	print("Span", max_span)
+	
+	# normalizing time
+	for i in points.size():
+		var point = points[i]
+		print("Before", point)
+		points[i] = point / max_span
+		print(point)
