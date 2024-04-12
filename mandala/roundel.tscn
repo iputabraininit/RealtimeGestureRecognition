@@ -13,7 +13,7 @@
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_sm56a"]
 gradient = SubResource("Gradient_vrr85")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_w5kwq"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4pd7g"]
 resource_local_to_scene = true
 shader = ExtResource("2_hgapl")
 shader_parameter/low_frequency_scroll = Vector2(0, 0.01)
@@ -60,7 +60,7 @@ color_ramp = SubResource("GradientTexture1D_2y56n")
 [node name="Roundel" type="Node2D"]
 
 [node name="GlyphDisplay" parent="." instance=ExtResource("1_vtjh7")]
-material = SubResource("ShaderMaterial_w5kwq")
+material = SubResource("ShaderMaterial_4pd7g")
 rotation = -3.14159
 
 [node name="GlyphDisplay2" parent="." instance=ExtResource("1_vtjh7")]

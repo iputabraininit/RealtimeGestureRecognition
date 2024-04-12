@@ -3,38 +3,40 @@ class_name TemplateLibraryBehaviour
 
 const TEMPLATE_POINT_SIZE = 17
 const TEMPLATE_VECTORS_SIZE = 16
-@export var some_var: int
 
-var _templates = {}
 var _resampled_templates = {}
 var _vector_points = {}
 var _predict_vector_points = {}
 var _predict_resampled_points = {}
 
+signal on_new_template_added(template_name:String, points:Array[Vector2])
 	
-func add_template(name: String, points:Array[Vector2]):
-	_templates[name] = points
-	var resampled_points_and_vectors = _new_penny_pincher_vectorisation_v5(points)
+func add_template(name: String, points:Array[Vector2], requires_persistance = false):
+	var resampled_points_and_vectors: Dictionary = _new_penny_pincher_vectorisation_v5(points)
 
-	_resampled_templates[name] = resampled_points_and_vectors["points"]
-	_vector_points[name] = resampled_points_and_vectors["vectors"]
+	if !_resampled_templates.has(name):
+		_resampled_templates[name] = []
+		_vector_points[name] = []
+
+	_resampled_templates[name].append(resampled_points_and_vectors["points"])
+	_vector_points[name].append(resampled_points_and_vectors["vectors"])
 
 	var half_length_points: Array[Vector2] = points.slice(0, (points.size() / 2))
 	var half_length_points_and_vectors: Dictionary = _new_penny_pincher_vectorisation_v5(half_length_points)
 
 	_predict_vector_points[name] = half_length_points_and_vectors["vectors"]
 	_predict_resampled_points[name] = half_length_points_and_vectors["points"]
-	#prints("Resampled points for", name, "points", _resampled_templates[name].size())
 	
-	
-func get_raw_template_points(template_name:String) -> Array[Vector2]:
-	return _templates[template_name]
+	if requires_persistance:
+		emit_signal("on_new_template_added", name, points)
+		
+
 	
 func get_resampled_points(template_name:String) -> Array[Vector2]:
-	return _resampled_templates[template_name]
+	return _resampled_templates[template_name][0]
 	
 func get_vector_points(template_name:String) -> Array[Vector2]:
-	return _vector_points[template_name]
+	return _vector_points[template_name][0]
 	
 func get_prediction_points(template_name:String) -> Array[Vector2]:
 	return _predict_resampled_points[template_name]
@@ -43,43 +45,31 @@ func get_prediction_vectors(template_name: String) -> Array[Vector2]:
 	return _predict_vector_points[template_name]
 	
 func recognize(point_stream:Array[Vector2]) -> RecognitionResult:
-	var start_recognize_time = Time.get_ticks_usec()
-	
-	var resampled_point_steam =  _new_penny_pincher_vectorisation_v5(point_stream)
-	var resampled_vectors = resampled_point_steam["vectors"]
-	var best_similarity:float = -INF
+
+	var resampled_point_stream: Dictionary = _new_penny_pincher_vectorisation_v5(point_stream)
+	var resampled_vectors                  = resampled_point_stream["vectors"]
+	var best_similarity:float  = -INF
 	var best_match_template :String
 
-	if resampled_vectors.size() < TEMPLATE_VECTORS_SIZE:
-		prints("Resampled incorrectly", resampled_vectors.size())
-		prints("\nVectors")
-		prints(resampled_vectors)
-		prints("\nPoints")
-		prints(resampled_point_steam["points"])
-		prints("\nOriginal Point Stream", point_stream.size())
-		prints(point_stream)
-		_new_penny_pincher_vectorisation_v5(point_stream, true)
-		
 	for template_key in _vector_points.keys():
-		var template_vectors = _vector_points[template_key]
-		var template_similarity:float = 0
 
-		for i in range(TEMPLATE_VECTORS_SIZE):
-			var stream_vector:Vector2 = resampled_vectors[i]
-			var template_vector:Vector2 = template_vectors[i]
-
-			var dot_product: float = stream_vector.dot(template_vector)
-			template_similarity += dot_product
-
-		#prints("Testing ", template_key, "similarity", template_similarity)
-		if (template_similarity > best_similarity):
-			best_similarity = template_similarity
-			best_match_template = template_key
-
-	var end_recognize_time = Time.get_ticks_usec()
-	#prints("\nTemplate", best_match_template, "Score", best_similarity, "Testing took (us)", (end_recognize_time-start_recognize_time))
+		var template_vectors_array = _vector_points[template_key]
 	
-	
+		for template_vectors in template_vectors_array:
+			var template_similarity:float = 0
+			
+			for i in range(TEMPLATE_VECTORS_SIZE):
+				var stream_vector:Vector2 = resampled_vectors[i]
+				var template_vector:Vector2 = template_vectors[i]
+
+				var dot_product: float = stream_vector.dot(template_vector)
+				template_similarity += dot_product
+
+			if (template_similarity > best_similarity):
+				best_similarity = template_similarity
+				best_match_template = template_key
+
+
 	return RecognitionResult.new(best_match_template, best_similarity)
 
 ## Look at all HALF templates, and see if the user is in the middle of a gesture
@@ -173,7 +163,6 @@ func _new_penny_pincher_vectorisation_v5(points: Array[Vector2], debug_printing:
 
 		path_fully_resampled = full_path_accumulator >= path_length
 
-				#prints("New vectors size", new_vectors.size())
 	if debug_printing:
 		prints("Fininished resample - accumulator", full_path_accumulator)
 

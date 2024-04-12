@@ -29,6 +29,7 @@ func _ready():
 		_move_to_origin_and_normalize(template_points)
 		template_library.add_template(template_name, template_points)
 	
+	template_file.close()
 	emit_signal("on_templates_loaded")
 	
  
@@ -39,7 +40,7 @@ func _move_to_origin_and_normalize(points:Array[Vector2]):
 	var max_y = -INF
 	
 	var origin = points[0]
-	prints("Origin", origin)
+
 	for i in points.size():
 		var point = points[i] 
 		points[i] = point - origin
@@ -52,11 +53,24 @@ func _move_to_origin_and_normalize(points:Array[Vector2]):
 	var y_span = max_y - min_y
 	
 	var max_span:float = max(x_span, y_span)
-	print("Span", max_span)
 	
 	# normalizing time
 	for i in points.size():
 		var point = points[i]
-		print("Before", point)
 		points[i] = point / max_span
-		print(point)
+
+func on_new_template_added(template_name, points:Array[Vector2]):
+	print("Saving gesture " + template_name)
+	var template_file = FileAccess.open(file_name, FileAccess.READ_WRITE)
+	template_file.seek_end()
+	
+	var name_and_gesture_as_strings:Array[String] = []
+	
+	name_and_gesture_as_strings.append(template_name)
+	for point in points:
+		name_and_gesture_as_strings.append(str(point.x).pad_decimals(2))
+		name_and_gesture_as_strings.append(str(point.y).pad_decimals(2))
+	
+	var data_to_persist = PackedStringArray(name_and_gesture_as_strings)
+	template_file.store_csv_line(data_to_persist)
+	

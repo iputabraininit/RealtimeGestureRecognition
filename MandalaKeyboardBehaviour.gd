@@ -29,3 +29,6 @@ func _input(event):
 			if event.keycode == KEY_M:
 				print("Moving clone out")
 				mandala.move_core_outwards()
+			if event.keycode == KEY_D:
+				print("Clearing core")
+				mandala.clear_core()

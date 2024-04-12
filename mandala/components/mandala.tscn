@@ -47,10 +47,12 @@ load_path = "res://.godot/imported/square.png-afa6dbabb36635292363b1d0f57da2c6.c
 position = Vector2(1000, 500)
 script = ExtResource("1_qg6gc")
 glpyhs = {
+"eye": "res://mandala/eye_shape.png",
 "heart": "res://mandala/heart_shape.png",
 "star": "res://mandala/star_shape.png"
 }
 glyph_colors = {
+"eye": Color(0.00784314, 0.207843, 0.8, 1),
 "heart": Color(0.694118, 0.345098, 0.466667, 1),
 "star": Color(0.92, 0.730633, 0.046, 1)
 }

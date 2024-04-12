@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://c7jsk6r66i50a"]
+
+[ext_resource type="Script" path="res://GestureDemoBehaviour.gd" id="1_1u2wh"]
+[ext_resource type="Texture2D" uid="uid://cme45pufnrpl1" path="res://round_point.png" id="2_n8pvs"]
+[ext_resource type="Texture2D" uid="uid://m6ogk5enlt0n" path="res://square_point.png" id="3_ka6yw"]
+[ext_resource type="Script" path="res://TemplateLibraryBehaviour.gd" id="3_yd6kf"]
+[ext_resource type="Script" path="res://TemplateLibraryLoader.gd" id="5_sdrhi"]
+[ext_resource type="Script" path="res://TemplateLabel.gd" id="6_x8kb8"]
+
+[sub_resource type="Curve" id="Curve_wj1wo"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.00809515), -3.33419, 0.0, 0, 0]
+point_count = 2
+
+[node name="GestureDemo" type="Node2D" node_paths=PackedStringArray("point_sprite", "resampled_point", "template_library", "vector_indicator", "template_label")]
+script = ExtResource("1_1u2wh")
+point_sprite = NodePath("PointSprite")
+resampled_point = NodePath("ResampledPoint")
+template_library = NodePath("TemplateLibrary")
+vector_indicator = NodePath("VectorIndicator")
+template_label = NodePath("TemplateLabel")
+
+[node name="PointSprite" type="Sprite2D" parent="."]
+position = Vector2(-10, -10)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_n8pvs")
+
+[node name="ResampledPoint" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.490196)
+position = Vector2(-10, -10)
+texture = ExtResource("3_ka6yw")
+
+[node name="VectorIndicator" type="Line2D" parent="."]
+points = PackedVector2Array(-90, -83, -34, -23)
+width = 15.0
+width_curve = SubResource("Curve_wj1wo")
+
+[node name="TemplateLibrary" type="Node" parent="."]
+script = ExtResource("3_yd6kf")
+
+[node name="TemplateLoader" type="Node" parent="." node_paths=PackedStringArray("template_library")]
+script = ExtResource("5_sdrhi")
+template_library = NodePath("../TemplateLibrary")
+file_name = "res://templates/simple_templates.txt"
+
+[node name="TemplateLabel" type="Node2D" parent="."]
+position = Vector2(-318, -206)
+script = ExtResource("6_x8kb8")
+font_size = 40

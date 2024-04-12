@@ -3,7 +3,7 @@ const MIN_BUFFER_SIZE: int = 50
 const MAX_BUFFER_SIZE: int = 200
 const SEARCH_STEP_SIZE: int = 25
 const PREDICT_SEARCH_STEP_SIZE: int = 15
-const RECOGNITION_THRESHOLD = 14
+const RECOGNITION_THRESHOLD = 14.5
 
 var previous_mouse_position:Vector2
 var _buffer:Array[Vector2] = []
@@ -15,7 +15,7 @@ var _last_mouse_movement
 @onready var _trail_line: Line2D = $DrawingLine
 @onready var _template_line: Line2D = $ShapeLine
 @onready var _shape_particles: GPUParticles2D = $ShapeParticles
-
+var _recording_mode = false
 
 func _ready():
 	pass
@@ -29,18 +29,50 @@ func _process(delta):
 func _input(event):
 	if event is InputEventMouseMotion:
 		handle_mouse_motion_event(event)
-
+	
+	if !_recording_mode:
+		if event is InputEventKey and event.is_pressed():
+			if event.keycode == KEY_SPACE:
+				_recording_mode = true
+				print("Record mode..., make the gesture, then chord a gesture mneomic")
+			if event.keycode == KEY_ESCAPE:
+				mandala.clear_core()
+	else:
+		if event is InputEventKey:
+			if event.keycode == KEY_H:
+				record_buffer_as("heart")
+			elif event.keycode == KEY_S:
+				record_buffer_as("star")
+			elif event.keycode == KEY_E:
+				record_buffer_as("eye")
+			elif event.keycode == KEY_C:
+				record_buffer_as("clone")
+			elif event.keycode == KEY_F:
+				record_buffer_as("fill_circle")
+			elif event.keycode == KEY_M:
+				record_buffer_as("move")
+			elif event.keycode == KEY_ESCAPE:
+				_recording_mode = false;
+				_buffer.clear()
+				_trail_line.clear_points()
+				mandala.clear_core()
+		
 
 func mandala_command(command:String):
 	if command == "heart":
-		print("Heart glyph")
 		mandala.add_glyph("heart")
-	if  command == "circle":
-		print("Copying core 4 ways")
-		mandala.core_four_ways()
 	if 	command == "star":
-		print("Cloning out")
 		mandala.add_glyph("star")
+	if command == "eye":
+		mandala.add_glyph("eye")
+	if command == "spiral":
+		mandala.add_glyph("spiral")
+	if command == "clone":
+		mandala.clone_core_outwards()
+	if command == "move":
+		mandala.move_core_outwards()
+	if  command == "fill_circle":
+		mandala.fill_inner_core()
 
 func _render_shape_line(buffer_points: Array[Vector2], matched_shape_points:Array[Vector2]):
 	_template_line.clear_points()
@@ -116,29 +148,29 @@ func handle_mouse_motion_event(event):
 
 	# Too unstable for now
 	## PREDICTion LOOP
-#		if _buffer.size() > MIN_BUFFER_SIZE / 2:
-#			var recognised = false;
-#			var previous_start_index = _buffer.size()
+	#if _buffer.size() > MIN_BUFFER_SIZE / 2:
+		#var recognised = false;
+		#var previous_start_index = _buffer.size()
 #
-#			for _buffer_search_size in range(MIN_BUFFER_SIZE + PREDICT_SEARCH_STEP_SIZE, MAX_BUFFER_SIZE, PREDICT_SEARCH_STEP_SIZE):
-#				var start_index = _buffer.size() - _buffer_search_size
-#				start_index  = max(0, start_index)
-#				if previous_start_index == start_index:
-#					break
+		#for _buffer_search_size in range(MIN_BUFFER_SIZE + PREDICT_SEARCH_STEP_SIZE, MAX_BUFFER_SIZE, PREDICT_SEARCH_STEP_SIZE):
+			#var start_index = _buffer.size() - _buffer_search_size
+			#start_index  = max(0, start_index)
+			#if previous_start_index == start_index:
+				#break
 #
-#				previous_start_index = start_index
-#				var sub_buffer = _buffer.slice(start_index, _buffer.size())
-#				var results = _templateLibrary.predict(sub_buffer)
+			#previous_start_index = start_index
+			#var sub_buffer = _buffer.slice(start_index, _buffer.size())
+			#var results = _templateLibrary.predict(sub_buffer)
 #
-#				for result_key in results.keys():
-#					if results[result_key] > 12:
-#						prints("Prediction '%s': %5.2f" % [result_key, results[result_key]])
-#						_render_prediction_line(sub_buffer, _templateLibrary.get_prediction_points(result_key), _templateLibrary.get_resampled_points(result_key))
+			#for result_key in results.keys():
+				#if results[result_key] > 12:
+					#prints("Prediction '%s': %5.2f" % [result_key, results[result_key]])
+					#_render_prediction_line(sub_buffer, _templateLibrary.get_prediction_points(result_key), _templateLibrary.get_resampled_points(result_key))
 
 		
 	
 	## DETECTION LOOP
-	if _buffer.size() > MIN_BUFFER_SIZE:
+	if !_recording_mode && _buffer.size() > MIN_BUFFER_SIZE:
 		# iterate through the buffer in steps, presenting each to the recognizer
 		# iterate from the latest 50, up to the latest 150
 		# loop from 50 to 150
@@ -173,4 +205,9 @@ func handle_mouse_motion_event(event):
 			if recognised:
 				break
 	
-
+func record_buffer_as(template_name):
+	_recording_mode = false;
+	_templateLibrary.add_template(template_name, _buffer, true)
+	_buffer.clear()
+	_trail_line.clear_points()
+	print("Template ", template_name, " added")

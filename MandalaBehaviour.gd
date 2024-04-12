@@ -38,3 +38,6 @@ func move_core_outwards():
 	outer_rim.adopt_cores(inner_rim.remove_held_cores())
 	inner_rim.clone_core(core, packed_core)
 	core.clear_glyphs()
+	
+func clear_core():
+	core.clear_glyphs()

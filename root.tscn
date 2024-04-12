@@ -87,12 +87,25 @@ joint_mode = 2
 [node name="TemplateLoader" type="Node" parent="." node_paths=PackedStringArray("template_library")]
 script = ExtResource("2_tg0lp")
 template_library = NodePath("../TemplateLibrary")
-file_name = "res://templates/templates.txt"
+file_name = "res://templates/mandala_templates.txt"
 
 [node name="TemplateLibrary" type="Node" parent="."]
 script = ExtResource("3_5qlo2")
 
 [node name="Mandala" parent="." instance=ExtResource("6_va0dn")]
+glpyhs = {
+"eye": "res://mandala/eye_shape.png",
+"heart": "res://mandala/heart_shape.png",
+"spiral": "res://mandala/spiral.png",
+"star": "res://mandala/star_shape.png"
+}
+glyph_colors = {
+"eye": Color(0.00784314, 0.207843, 0.8, 1),
+"heart": Color(0.694118, 0.345098, 0.466667, 1),
+"spiral": Color(0, 0.368627, 0.0666667, 1),
+"star": Color(0.92, 0.730633, 0.046, 1)
+}
 
 [connection signal="on_templates_loaded" from="TemplateLoader" to="RealtimeGestureRecognizer" method="_on_template_loader_on_templates_loaded"]
 [connection signal="on_templates_loaded" from="TemplateLoader" to="trail_renderer" method="_on_template_loader_on_templates_loaded"]
+[connection signal="on_new_template_added" from="TemplateLibrary" to="TemplateLoader" method="on_new_template_added"]

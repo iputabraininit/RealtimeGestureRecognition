@@ -47,30 +47,6 @@ func _input(event):
 			_trail_line.add_point(current_position)
 			if (_trail_line.points.size() >= BUFFER_SIZE):
 				_trail_line.remove_point(0)
-
-		
-
-
-func _on_template_loader_on_templates_loaded():
-	print("templates loaded, getting one to render")
-	var template_points = _templateLibrary.get_raw_template_points("triangle")
-	#
-	#for point in template_points:
-		#_trail_line.add_point(point)
-
-	var resampled_points = _templateLibrary.get_resampled_points("triangle")
-	var vector_points = _templateLibrary.get_vector_points("triangle")
-	
-	for point_index in range(0, resampled_points.size() - 1):
-		var point = resampled_points[point_index]
-		var vector = vector_points[point_index]
-		
-		_template_line.add_point(point * 1)
-		var vector_indicator = Line2D.new()
-		vector_indicator.width = 2
-		vector_indicator.add_point(point)
-		vector_indicator.add_point(point + (vector * 20))
-		_template_line.add_child(vector_indicator)
 		
 		
 		
