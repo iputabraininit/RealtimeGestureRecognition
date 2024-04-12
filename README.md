@@ -3,7 +3,7 @@ A proof of concept to show realtime gesture recognition using the Penny Pincher 
 
 This is using the Godot (4.2.1) game-engine and GdScript. Run the root.tscn and off you go. Watch the youtube video for what the gestures are.
 
-![/media/mandala_drawing.png]
+![The mandala being drawn](/media/mandala_drawing.png)
 
 ### Gesture Templates
 There are 2 gesture template libraries res://templates/mandala_templates.txt and res://templates/simple_templates.txt. 
